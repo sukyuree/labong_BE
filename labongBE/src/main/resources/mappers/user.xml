@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.comealone.jeju.domain.repository.UserRepository">
+
+	<resultMap id="UserModel" type="User">
+	  <result column="user_id" property="userId"/>
+	  <result column="user_pw" property="userPw"/>
+	  <result column="nick_name" property="nickName"/>
+	  <result column="email" property="email"/>
+	  <result column="profile_img" property="profile_img"/>
+	  <result column="grade_points" property="gradePoints"/>
+	</resultMap>
+	
+	<select id="findById" resultMap="UserModel">
+		SELECT *
+		FROM user
+		WHERE id = #{id}
+	</select>
+	
+	<select id="findByEmail" resultMap="UserModel">
+		SELECT *
+		FROM user
+		WHERE email = #{email}
+	</select>
+	
+	<select id="findByUserId" resultMap="UserModel">
+		SELECT *
+		FROM user
+		WHERE email = #{userId}
+	</select>
+	
+	<select id="findByNickName" resultMap="UserModel">
+		SELECT *
+		FROM user
+		WHERE email = #{nickName}
+	</select>
+	
+	<insert id="save">
+		INSERT INTO user(
+			user_id, user_pw, ,nick_name, email, profile_img
+		) values (
+			#{user_id}, #{user_pw}, #{nick_name}, #{email}, #{profile_img}
+		)
+	</insert>
+</mapper>
