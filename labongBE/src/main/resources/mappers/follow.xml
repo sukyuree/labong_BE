@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.comealone.jeju.domain.repository.FollowRepository">
+
+    <resultMap id="UserModel" type="User">
+        <result column="id" property="id"/>
+        <result column="user_id" property="userId"/>
+        <result column="user_pw" property="userPw"/>
+        <result column="nick_name" property="nickName"/>
+        <result column="email" property="email"/>
+        <result column="profile_img" property="profile_img"/>
+        <result column="grade_points" property="gradePoints"/>
+    </resultMap>
+
+    <select id="findAllFollowerById" resultType="String">
+        SELECT user.nick_name
+        FROM user join follow on(user.id=follow.following)
+        WHERE user.id = #{id}
+    </select>
+
+    <select id="findAllFollowingById" resultType="String">
+        SELECT user.nick_name
+        FROM user join follow on(user.id=follow.follower)
+        WHERE user.id = #{id}
+    </select>
+
+    <insert id="save">
+        INSERT INTO follow(
+            follower, following
+        ) values (
+            #{followerId}, #{followingId}
+        )
+    </insert>
+</mapper>

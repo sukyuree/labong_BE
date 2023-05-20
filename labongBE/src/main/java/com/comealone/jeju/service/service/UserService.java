@@ -29,7 +29,6 @@ public class UserService {
     private User findCurrentUser(){
         User user = userRepository.findById(SecurityUtil.getCurrentUserId())
                 .orElseThrow(() -> new RuntimeException("로그인 유저 정보가 없습니다."));
-
         return user;
     }
     
