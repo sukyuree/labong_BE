@@ -16,21 +16,21 @@
 
     <select id="findAllFollowerById" resultType="String">
         SELECT user.nick_name
-        FROM user join follow on(user.id=follow.following)
-        WHERE user.id = #{id}
+        FROM user join (SELECT * FROM follow WHERE following = #{id}) as f
+        on(user.id=f.follower)
     </select>
 
     <select id="findAllFollowingById" resultType="String">
         SELECT user.nick_name
-        FROM user join follow on(user.id=follow.follower)
-        WHERE user.id = #{id}
+        FROM user join (SELECT * FROM follow WHERE follower = #{id}) as f
+        on(user.id=f.following)
     </select>
 
     <insert id="save">
         INSERT INTO follow(
             follower, following
         ) values (
-            #{followerId}, #{followingId}
+            #{follower}, #{following}
         )
     </insert>
 </mapper>

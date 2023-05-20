@@ -3,6 +3,7 @@ package com.comealone.jeju.service.service;
 import com.comealone.jeju.domain.model.User;
 import com.comealone.jeju.domain.repository.FollowRepository;
 import com.comealone.jeju.domain.repository.UserRepository;
+import com.comealone.jeju.service.request.FollowReq;
 import com.comealone.jeju.util.security.SecurityUtil;
 import lombok.RequiredArgsConstructor;
 import org.apache.ibatis.annotations.Param;
@@ -30,10 +31,11 @@ public class FollowService {
     }
 
     @Transactional
-    public void addFollowing(String nickName){
-        User followingUser = userRepository.findByNickName(nickName).orElse(null);
+    public void addFollowing(FollowReq followReq){
+        User followingUser = userRepository.findByNickName(followReq.getNickName()).orElse(null);
         User followedUser = userRepository.findById(SecurityUtil.getCurrentUserId())
                 .orElseThrow(() -> new RuntimeException("로그인 유저 정보가 없습니다."));
-        followRepository.save(followedUser.getId(), followingUser.getId());
+
+        followRepository.save(followReq.toFollowModel(followedUser.getId(), followingUser.getId()));
     }
 }

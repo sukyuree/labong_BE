@@ -1,6 +1,6 @@
 package com.comealone.jeju.domain.repository;
 
-import com.comealone.jeju.domain.model.User;
+import com.comealone.jeju.domain.model.Follow;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -9,5 +9,5 @@ import java.util.List;
 public interface FollowRepository {
     List<String> findAllFollowerById(Long id);
     List<String> findAllFollowingById(Long id);
-    void save(Long followerId, Long followingId);
+    void save(Follow follow);
 }

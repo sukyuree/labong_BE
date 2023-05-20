@@ -34,7 +34,7 @@ public class FollowController {
     public ResponseEntity<? extends BaseResponse> addFollower(@RequestBody FollowReq followReq){
         if(!userService.isExistNickName(followReq.getNickName()))
             return ResponseEntity.status(404).body(new BaseResponse("존재하지 않는 사용자입니다.",404));
-        followService.addFollowing(followReq.getNickName());
+        followService.addFollowing(followReq);
         return ResponseEntity.status(201).body(new BaseResponse("팔로우가 완료 되었습니다.",201));
     }
 }
