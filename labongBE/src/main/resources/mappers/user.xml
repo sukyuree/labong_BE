@@ -29,13 +29,13 @@
 	<select id="findByUserId" resultMap="UserModel">
 		SELECT *
 		FROM user
-		WHERE email = #{userId}
+		WHERE user_id = #{userId}
 	</select>
 	
 	<select id="findByNickName" resultMap="UserModel">
 		SELECT *
 		FROM user
-		WHERE email = #{nickName}
+		WHERE nick_name = #{nickName}
 	</select>
 	
 	<insert id="save">

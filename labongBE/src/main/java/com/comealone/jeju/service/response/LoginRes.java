@@ -1,5 +1,10 @@
 package com.comealone.jeju.service.response;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 public class LoginRes extends BaseResponse{
 	String accessToken;
 	String refreshToken;

@@ -65,7 +65,6 @@ public class UserController {
         TokenDto tokenDto = userService.createToken(loginReq);
         
         // Todo : 로그인 할 때 친구 목록 넘겨주기.
-        
         return ResponseEntity.status(200).body(new LoginRes("로그인에 성공했습니다.",200, tokenDto.getAccessToken(),tokenDto.getRefreshToken()));
     }
 }
