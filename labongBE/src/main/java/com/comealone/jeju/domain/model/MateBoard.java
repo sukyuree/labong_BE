@@ -2,7 +2,7 @@ package com.comealone.jeju.domain.model;
 
 import lombok.*;
 
-import java.sql.Date;
+import java.util.Date;
 import java.time.LocalDateTime;
 
 @Builder
@@ -17,6 +17,6 @@ public class MateBoard {
     String content;
     Date date;
     String place;
-    User user;
+    Long user;
     LocalDateTime createdAt;
 }
