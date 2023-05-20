@@ -59,6 +59,7 @@ public class UserService {
     
     @Transactional
     public void save(SignUpReq signUpReq) {
+        System.out.println(signUpReq.toUserModel().getUserId());
         userRepository.save(signUpReq.toUserModel());
     }
     

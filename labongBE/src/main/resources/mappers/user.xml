@@ -5,6 +5,7 @@
 <mapper namespace="com.comealone.jeju.domain.repository.UserRepository">
 
 	<resultMap id="UserModel" type="User">
+	  <result column="id" property="id"/>
 	  <result column="user_id" property="userId"/>
 	  <result column="user_pw" property="userPw"/>
 	  <result column="nick_name" property="nickName"/>
@@ -39,9 +40,9 @@
 	
 	<insert id="save">
 		INSERT INTO user(
-			user_id, user_pw, ,nick_name, email, profile_img
+			user_id, user_pw, nick_name, email, profile_img
 		) values (
-			#{user_id}, #{user_pw}, #{nick_name}, #{email}, #{profile_img}
+			#{userId}, #{userPw}, #{nickName}, #{email}, #{profileImg}
 		)
 	</insert>
 </mapper>

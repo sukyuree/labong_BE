@@ -24,9 +24,6 @@ public class UserController {
     private final MailService mailService;
     private final CertificationService certificationService;
     
-    @Value("${JASYPT_PASSWORD}")
-	private String encryptKey;
-    
     @PostMapping("/signup")
     public ResponseEntity<? extends BaseResponse> addUser(@Valid @RequestBody SignUpReq signUpReq){
         if(userService.isExistUserId(signUpReq.getUserId()))
@@ -59,7 +56,6 @@ public class UserController {
 
     @PostMapping("/login")
     public ResponseEntity<? extends BaseResponse> loginUser(@Valid @RequestBody LoginReq loginReq) {
-    	System.out.println("HIHI"+encryptKey);
         if(!userService.isExistUserId(loginReq.getUserId()))
             return ResponseEntity.status(400).body(new BaseResponse("존재하지 않는 ID 입니다.", 400));
 
