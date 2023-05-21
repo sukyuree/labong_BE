@@ -69,7 +69,8 @@ public class MateBoardService {
     }
     public boolean isWriter(Long id){
         User user = currentUser();
-        return user.getId()==id? true:false;
+        MateBoard mateBoard = mateBoardRepository.findById(id).orElse(null);
+        return user.getId()==mateBoard.getUser() ? true:false;
     }
 
     @Transactional
@@ -77,5 +78,23 @@ public class MateBoardService {
         User user = currentUser();
         Comment comment = commentReq.toCommentModel(id,user.getId());
         commentRepository.save(comment);
+    }
+
+    @Transactional
+    public void modifyComment(Long commentId, CommentReq commentReq){
+        Comment comment = commentRepository.findById(commentId).orElse(null);
+        comment.setContent(commentReq.getContent());
+        commentRepository.update(comment);
+    }
+
+    @Transactional
+    public void deleteComment(Long commentId){
+        commentRepository.delete(commentId);
+    }
+
+    public boolean isCommentWriter(Long commentId){
+        User user = currentUser();
+        Comment comment = commentRepository.findById(commentId).orElse(null);
+        return user.getId()==comment.getUser() ? true:false;
     }
 }

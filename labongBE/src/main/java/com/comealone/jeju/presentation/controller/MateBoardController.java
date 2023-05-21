@@ -49,7 +49,7 @@ public class MateBoardController {
     @DeleteMapping("/{id}")
     public ResponseEntity<? extends BaseResponse> deletePost(@PathVariable Long id){
         if(!mateBoardService.isWriter(id))
-            ResponseEntity.status(403).body(new BaseResponse("글 수정 권한이 없습니다.",403));
+            ResponseEntity.status(403).body(new BaseResponse("글 삭제 권한이 없습니다.",403));
         mateBoardService.deleteMateBoard(id);
         return ResponseEntity.status(200).body(new BaseResponse("글 삭제에 성공했습니다.",200));
     }
@@ -58,5 +58,21 @@ public class MateBoardController {
     public ResponseEntity<? extends BaseResponse> addComment(@PathVariable Long id, @RequestBody CommentReq commentReq){
         mateBoardService.addComment(id,commentReq);
         return ResponseEntity.status(201).body(new BaseResponse("댓글이 등록되었습니다.",201));
+    }
+
+    @PutMapping("/comment/{id}")
+    public ResponseEntity<? extends BaseResponse> modifyComment(@PathVariable Long id,@RequestBody CommentReq commentReq){
+        if(!mateBoardService.isCommentWriter(id))
+            return ResponseEntity.status(403).body(new BaseResponse("댓글 수정 권한이 없습니다.",403));
+        mateBoardService.modifyComment(id,commentReq);
+        return ResponseEntity.status(200).body(new BaseResponse("댓글 수정에 성공했습니다.",200));
+    }
+
+    @DeleteMapping("/comment/{id}")
+    public ResponseEntity<? extends BaseResponse> deleteComment(@PathVariable Long id){
+        if(!mateBoardService.isCommentWriter(id))
+            return ResponseEntity.status(403).body(new BaseResponse("댓글 삭제 권한이 없습니다.",403));
+        mateBoardService.deleteComment(id);
+        return ResponseEntity.status(200).body(new BaseResponse("댓글 삭제에 성공했습니다.",200));
     }
 }

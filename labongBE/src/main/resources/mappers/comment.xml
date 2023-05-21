@@ -6,9 +6,7 @@
 
 	<resultMap id="CommentModel" type="Comment">
 	  <result column="id" property="id"/>
-	  <result column="depth" property="depth"/>
-	  <result column="group" property="group"/>
-	  <result column="nickName" property="user"/>
+	  <result column="user" property="user"/>
 	  <result column="board" property="board"/>
 	  <result column="content" property="content"/>
 	</resultMap>
@@ -20,6 +18,12 @@
 			#{user}, #{board}, #{content}
 		)
 	</insert>
+
+	<select id="findById" resultMap="CommentModel">
+		SELECT *
+		FROM comment
+		WHERE id = #{id}
+	</select>
 
 	<select id="findAllByBoardId" resultType="com.comealone.jeju.service.dto.CommentDto">
 		SELECT c.id as "id", user.nick_name as nickName, c.created_at as createdAt, c.content as content
