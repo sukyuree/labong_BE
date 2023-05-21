@@ -32,6 +32,10 @@ public class MateBoardService {
         mateBoardRepository.update(mateBoardReq.toMateBoardModelForUpdate(id));
     }
 
+    @Transactional
+    public void deleteMateBoard(Long id){
+        mateBoardRepository.delete(id);
+    }
     public boolean isWriter(Long id){
         User user = currentUser();
         return user.getId()==id? true:false;

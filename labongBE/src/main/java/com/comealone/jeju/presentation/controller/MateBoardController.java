@@ -27,4 +27,12 @@ public class MateBoardController {
         mateBoardService.modifyMateBoard(id, mateBoardReq);
         return ResponseEntity.status(201).body(new BaseResponse("글 수정에 성공했습니다.",201));
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<? extends BaseResponse> deletePost(@PathVariable Long id){
+        if(!mateBoardService.isWriter(id))
+            ResponseEntity.status(403).body(new BaseResponse("글 수정 권한이 없습니다.",403));
+        mateBoardService.deleteMateBoard(id);
+        return ResponseEntity.status(200).body(new BaseResponse("글 삭제에 성공했습니다.",200));
+    }
 }

@@ -33,4 +33,9 @@
 		SET title = #{title}, content = #{content}, date = #{date}, place = #{place}
 		WHERE id = #{id}
 	</update>
+
+	<delete id="delete">
+		DELETE FROM mate_board
+		WHERE id = #{id}
+	</delete>
 </mapper>

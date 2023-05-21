@@ -10,4 +10,5 @@ public interface MateBoardRepository {
     void save(MateBoard mateBoard);
     Optional<MateBoard> findById(Long id);
     void update(MateBoard mateBoard);
+    void delete(Long id);
 }
