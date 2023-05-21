@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.comealone.jeju.domain.repository.CommentRepository">
+
+	<resultMap id="CommentModel" type="Comment">
+	  <result column="id" property="id"/>
+	  <result column="depth" property="depth"/>
+	  <result column="group" property="group"/>
+	  <result column="user" property="user"/>
+	  <result column="board" property="board"/>
+	  <result column="content" property="content"/>
+	</resultMap>
+
+	<insert id="save">
+		INSERT INTO mate_board(
+			depth, group, user, board, content
+		) values (
+			#{depth}, #{group}, #{user}, #{board}, #{content}
+		)
+	</insert>
+
+	<select id="findAllByBoardId" resultMap="CommentModel">
+		SELECT *
+		FROM comment
+		WHERE board = #{board}
+	</select>
+
+	<update id="update">
+		UPDATE mate_board
+		SET title = #{title}, content = #{content}, date = #{date}, place = #{place}
+		WHERE id = #{id}
+	</update>
+
+	<delete id="delete">
+		DELETE FROM mate_board
+		WHERE id = #{id}
+	</delete>
+</mapper>

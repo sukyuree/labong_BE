@@ -2,7 +2,7 @@ package com.comealone.jeju.domain.model;
 
 import lombok.*;
 
-import java.util.Date;
+import java.sql.Date;
 import java.time.LocalDateTime;
 
 @Builder

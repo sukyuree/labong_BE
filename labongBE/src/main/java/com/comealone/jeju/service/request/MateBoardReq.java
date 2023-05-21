@@ -4,7 +4,7 @@ import com.comealone.jeju.domain.model.MateBoard;
 import lombok.Getter;
 
 import javax.validation.constraints.NotNull;
-import java.util.Date;
+import java.sql.Date;
 
 @Getter
 public class MateBoardReq {

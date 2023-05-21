@@ -1,7 +1,9 @@
 package com.comealone.jeju.presentation.controller;
 
+import com.comealone.jeju.service.dto.MateBoardDto;
 import com.comealone.jeju.service.request.MateBoardReq;
 import com.comealone.jeju.service.response.BaseResponse;
+import com.comealone.jeju.service.response.MateBoardRes;
 import com.comealone.jeju.service.service.MateBoardService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +20,12 @@ public class MateBoardController {
     public ResponseEntity<? extends BaseResponse> addPost(@RequestBody MateBoardReq mateBoardReq){
         mateBoardService.addMateBoard(mateBoardReq);
         return ResponseEntity.status(201).body(new BaseResponse("글 등록에 성공했습니다.",201));
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<? extends BaseResponse> getPost(@PathVariable Long id){
+        MateBoardDto mateBoardDto = mateBoardService.getMateBoard(id);
+        return ResponseEntity.status(200).body(new MateBoardRes("글 조회에 성공했습니다.",200,mateBoardDto));
     }
 
     @PutMapping("/{id}")
