@@ -27,4 +27,15 @@ public class MateBoardReq {
                 .build();
         return mateBoard;
     }
+
+    public MateBoard toMateBoardModelForUpdate(Long id){
+        MateBoard mateBoard = MateBoard.builder()
+                .id(id)
+                .title(this.title)
+                .content(this.content)
+                .date(this.date)
+                .place(this.place)
+                .build();
+        return mateBoard;
+    }
 }

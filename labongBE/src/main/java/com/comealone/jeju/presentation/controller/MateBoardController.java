@@ -15,8 +15,16 @@ public class MateBoardController {
     private final MateBoardService mateBoardService;
 
     @PostMapping
-    public ResponseEntity<? extends BaseResponse> addPosts(@RequestBody MateBoardReq mateBoardReq){
+    public ResponseEntity<? extends BaseResponse> addPost(@RequestBody MateBoardReq mateBoardReq){
         mateBoardService.addMateBoard(mateBoardReq);
         return ResponseEntity.status(201).body(new BaseResponse("글 등록에 성공했습니다.",201));
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<? extends BaseResponse> modifyPost(@PathVariable Long id, @RequestBody MateBoardReq mateBoardReq){
+        if(!mateBoardService.isWriter(id))
+            ResponseEntity.status(403).body(new BaseResponse("글 수정 권한이 없습니다.",403));
+        mateBoardService.modifyMateBoard(id, mateBoardReq);
+        return ResponseEntity.status(201).body(new BaseResponse("글 수정에 성공했습니다.",201));
     }
 }

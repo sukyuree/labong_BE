@@ -18,6 +18,7 @@ import java.util.List;
 public class FollowController {
     private final FollowService followService;
     private final UserService userService;
+
     @GetMapping("/follower")
     public ResponseEntity<? extends BaseResponse> getFollower(){
         List<String> follower = followService.getMyFollower();

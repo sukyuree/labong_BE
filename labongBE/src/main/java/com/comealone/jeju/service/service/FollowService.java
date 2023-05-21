@@ -18,23 +18,25 @@ public class FollowService {
     private final UserRepository userRepository;
     private final FollowRepository followRepository;
 
-    public List<String> getMyFollower(){
+    private User currentUser(){
         User user = userRepository.findById(SecurityUtil.getCurrentUserId())
                 .orElseThrow(() -> new RuntimeException("로그인 유저 정보가 없습니다."));
+        return user;
+    }
+    public List<String> getMyFollower(){
+        User user = currentUser();
         return followRepository.findAllFollowerById(user.getId());
     }
 
     public List<String> getMyFollowing(){
-        User user = userRepository.findById(SecurityUtil.getCurrentUserId())
-                .orElseThrow(() -> new RuntimeException("로그인 유저 정보가 없습니다."));
+        User user = currentUser();
         return followRepository.findAllFollowingById(user.getId());
     }
 
     @Transactional
     public void addFollowing(FollowReq followReq){
         User followingUser = userRepository.findByNickName(followReq.getNickName()).orElse(null);
-        User followedUser = userRepository.findById(SecurityUtil.getCurrentUserId())
-                .orElseThrow(() -> new RuntimeException("로그인 유저 정보가 없습니다."));
+        User followedUser = currentUser();
 
         followRepository.save(followReq.toFollowModel(followedUser.getId(), followingUser.getId()));
     }
