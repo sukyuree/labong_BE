@@ -28,6 +28,11 @@
 		WHERE id = #{id}
 	</select>
 
+	<select id="findAll" resultMap="MateBoardModel">
+		SELECT *
+		FROM mate_board
+	</select>
+
 	<update id="update">
 		UPDATE mate_board
 		SET title = #{title}, content = #{content}, date = #{date}, place = #{place}

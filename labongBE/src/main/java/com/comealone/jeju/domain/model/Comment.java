@@ -12,10 +12,7 @@ import java.util.List;
 @ToString
 public class Comment {
     Long id;
-    boolean depth;
-    Long group;
     Long user;
     Long board;
     String content;
-    List<Comment> recomment;
 }

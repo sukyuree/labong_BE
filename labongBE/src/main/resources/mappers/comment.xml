@@ -8,33 +8,32 @@
 	  <result column="id" property="id"/>
 	  <result column="depth" property="depth"/>
 	  <result column="group" property="group"/>
-	  <result column="user" property="user"/>
+	  <result column="nickName" property="user"/>
 	  <result column="board" property="board"/>
 	  <result column="content" property="content"/>
 	</resultMap>
 
 	<insert id="save">
-		INSERT INTO mate_board(
-			depth, group, user, board, content
+		INSERT INTO comment(
+			user, board, content
 		) values (
-			#{depth}, #{group}, #{user}, #{board}, #{content}
+			#{user}, #{board}, #{content}
 		)
 	</insert>
 
-	<select id="findAllByBoardId" resultMap="CommentModel">
-		SELECT *
-		FROM comment
-		WHERE board = #{board}
+	<select id="findAllByBoardId" resultType="com.comealone.jeju.service.dto.CommentDto">
+		SELECT c.id as "id", user.nick_name as nickName, c.created_at as createdAt, c.content as content
+		FROM user join (SELECT * FROM comment where board = #{board}) as c on (user.id=c.user)
 	</select>
 
 	<update id="update">
-		UPDATE mate_board
-		SET title = #{title}, content = #{content}, date = #{date}, place = #{place}
+		UPDATE comment
+		SET content = #{content}
 		WHERE id = #{id}
 	</update>
 
 	<delete id="delete">
-		DELETE FROM mate_board
+		DELETE FROM comment
 		WHERE id = #{id}
 	</delete>
 </mapper>

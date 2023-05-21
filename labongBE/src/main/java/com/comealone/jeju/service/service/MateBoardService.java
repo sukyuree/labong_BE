@@ -6,7 +6,9 @@ import com.comealone.jeju.domain.model.User;
 import com.comealone.jeju.domain.repository.CommentRepository;
 import com.comealone.jeju.domain.repository.MateBoardRepository;
 import com.comealone.jeju.domain.repository.UserRepository;
+import com.comealone.jeju.service.dto.CommentDto;
 import com.comealone.jeju.service.dto.MateBoardDto;
+import com.comealone.jeju.service.request.CommentReq;
 import com.comealone.jeju.service.request.MateBoardReq;
 import com.comealone.jeju.util.security.SecurityUtil;
 import lombok.RequiredArgsConstructor;
@@ -14,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -29,12 +32,23 @@ public class MateBoardService {
         return user;
     }
 
+    public List<MateBoardDto> getAllMateBoard(){
+        List<MateBoardDto> mateBoardDtoList = new ArrayList<>();
+        List<MateBoard> mateBoardList = mateBoardRepository.findAll();
+        for(MateBoard m : mateBoardList){
+            User user = userRepository.findById(m.getUser()).orElse(null);
+            List<CommentDto> commentList = commentRepository.findAllByBoardId(m.getId());
+            mateBoardDtoList.add(new MateBoardDto(m,user,commentList));
+        }
+        return mateBoardDtoList;
+    }
+
     public MateBoardDto getMateBoard(Long id){
         MateBoard mateBoard = mateBoardRepository.findById(id).orElse(null);
         Date date = mateBoard.getDate();
         System.out.println(date);
         User user = userRepository.findById(mateBoard.getUser()).orElse(null);
-        List<Comment> commentList = commentRepository.findAllByBoardId(id);
+        List<CommentDto> commentList = commentRepository.findAllByBoardId(id);
         return new MateBoardDto(mateBoard,user,commentList);
     }
 
@@ -56,5 +70,12 @@ public class MateBoardService {
     public boolean isWriter(Long id){
         User user = currentUser();
         return user.getId()==id? true:false;
+    }
+
+    @Transactional
+    public void addComment(Long id, CommentReq commentReq){
+        User user = currentUser();
+        Comment comment = commentReq.toCommentModel(id,user.getId());
+        commentRepository.save(comment);
     }
 }

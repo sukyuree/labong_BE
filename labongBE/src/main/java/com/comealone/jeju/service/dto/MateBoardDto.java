@@ -9,7 +9,6 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.sql.Date;
 import java.util.List;
@@ -27,10 +26,12 @@ public class MateBoardDto {
     Date date;
     String place;
     String nickName;
-    LocalDateTime createdAt;
-    List<Comment> commentList;
 
-    public MateBoardDto(MateBoard mateBoard, User user, List<Comment> commentList){
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd-hh:mm:ss")
+    LocalDateTime createdAt;
+    List<CommentDto> commentList;
+
+    public MateBoardDto(MateBoard mateBoard, User user, List<CommentDto> commentList){
         this.id = mateBoard.getId();
         this.title = mateBoard.getTitle();
         this.content = mateBoard.getContent();
