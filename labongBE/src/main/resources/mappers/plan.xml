@@ -10,25 +10,64 @@
 		<result column="start_date" property="startDate"/>
 		<result column="end_date" property="endDate"/>
 		<result column="concept" property="concept"/>
-		<result column="is_priavte" property="isPrivate"/>
+		<result column="is_private" property="isPrivate"/>
 		<result column="user" property="user"/>
 		<result column="created_at" property="createdAt"/>
 	</resultMap>
 
-	<select id="findAll" resultMap="PlanModel">
+	<select id="findById" resultMap="PlanModel">
 		SELECT *
 		FROM plan
+		WHERE id = #{id}
 	</select>
 
-	<select id="findAllByConcept" resultMap="PlanModel">
-		SELECT *
-		FROM plan
-		WHERE concept = #{concept}
+	<select id="findAll" resultType="com.comealone.jeju.service.dto.PlanDto">
+		SELECT plan.id as id, plan.plan_name as planName, plan.start_date as startDate,
+			   plan.end_date as endDate, plan.concept as concept,
+			   plan.created_at as createdAt, user.nick_name as nickName
+		FROM plan JOIN user on(plan.user=user.id)
 	</select>
 
-	<select id="findAllByUser" resultMap="PlanModel">
-		SELECT *
-		FROM plan
-		WHERE user = #{user}
+	<select id="findAllByConcept" resultType="com.comealone.jeju.service.dto.PlanDto">
+		SELECT plan.id as id, plan.plan_name as planName, plan.start_date as startDate,
+			   plan.end_date as endDate, plan.concept as concept,
+			   plan.created_at as createdAt, user.nick_name as nickName
+		FROM plan JOIN user on(plan.user=user.id)
+		WHERE plan.concept = #{concept}
 	</select>
+
+	<select id="findAllByUser" resultType="com.comealone.jeju.service.dto.PlanDto">
+		SELECT plan.id as id, plan.plan_name as planName, plan.start_date as startDate,
+			   plan.end_date as endDate, plan.concept as concept,
+			   plan.created_at as createdAt, user.nick_name as nickName
+		FROM plan JOIN user on(plan.user=user.id)
+		WHERE plan.user = #{user}
+	</select>
+
+	<select id="findAllByPlanName" resultType="com.comealone.jeju.service.dto.PlanDto">
+		SELECT plan.id as id, plan.plan_name as planName, plan.start_date as startDate,
+			   plan.end_date as endDate, plan.concept as concept,
+			   plan.created_at as createdAt, user.nick_name as nickName
+		FROM plan JOIN user on(plan.user=user.id)
+		WHERE plan.plan_name LIKE CONCAT('%', #{keyword}, '%')
+	</select>
+
+	<insert id="save">
+		INSERT INTO plan(
+			plan_name, start_date, end_date, concept, user
+		) values (
+			 #{planName}, #{startDate}, #{endDate}, #{concept}, #{user}
+		 )
+	</insert>
+
+	<update id="update">
+		UPDATE plan
+		SET plan_name = #{planName}, start_date = #{startDate}, end_date = #{endDate}, concept = #{concept}
+		WHERE id = #{id}
+	</update>
+
+	<delete id="delete">
+		DELETE FROM plan
+		WHERE id = #{id}
+	</delete>
 </mapper>

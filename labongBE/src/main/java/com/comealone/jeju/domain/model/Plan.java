@@ -4,6 +4,7 @@ import lombok.*;
 
 import java.math.BigDecimal;
 import java.sql.Date;
+import java.time.LocalDateTime;
 
 @Builder
 @Getter
@@ -18,11 +19,11 @@ public class Plan {
 
     Date startDate;
     
-    Date EndDate;
+    Date endDate;
     
     Long user;
     
-    boolean isPriavte;
-    
     String concept;
+
+    LocalDateTime createdAt;
 }

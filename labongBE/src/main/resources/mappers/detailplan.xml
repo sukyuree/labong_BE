@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.comealone.jeju.domain.repository.DetailPlanRepository">
+	<resultMap id="DetailPlanModel" type="DetailPlan">
+		<result column="id" property="id"/>
+		<result column="day" property="day"/>
+		<result column="order" property="order"/>
+		<result column="plan" property="plan"/>
+		<result column="attraction" property="attraction"/>
+	</resultMap>
+
+	<select id="findById" resultMap="DetailPlanModel">
+		SELECT *
+		FROM detailplan
+		WHERE id = #{id}
+	</select>
+
+	<select id="findAllByPlanId" resultType="com.comealone.jeju.service.dto.DetailPlanDto">
+		SELECT detailplan.id as detailPlanId, detailplan.day as day, detailplan.order as `order`,
+			attraction.id as attId, attraction.address as attAddress, attraction.latitude as attLatitude,
+			attraction.longitude as attLongitude, attraction.image1 as attImage1, attraction.image2 as attImage2
+		FROM detailplan JOIN attraction on(detailplan.attraction = attraction.id)
+		WHERE detailplan.plan = #{planId}
+	</select>
+
+	<insert id="save">
+		INSERT INTO detailplan (day, `order`, plan, attraction)
+		VALUES (#{day}, #{order}, #{plan}, #{attraction})
+	</insert>
+
+	<update id="update">
+		UPDATE detailplan
+		SET day = #{day}, `order` = #{order}, attraction = #{attraction}
+		WHERE id = #{id}
+	</update>
+
+	<delete id="delete">
+		DELETE FROM detailplan
+		WHERE id = #{id}
+	</delete>
+</mapper>
