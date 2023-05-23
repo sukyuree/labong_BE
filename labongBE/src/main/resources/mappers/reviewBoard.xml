@@ -23,15 +23,19 @@
 
 	<select id="findById" resultType="com.comealone.jeju.service.dto.ReviewBoardDto">
 		SELECT r.id AS id, r.title AS title, r.img AS img, r.content AS content, r.created_at AS createdAt,
-		       u.nick_name AS nickName, a.title AS `attraction`
-		FROM review_board AS r JOIN user AS u ON (r.user = u.id) JOIN attraction AS a ON (r.attraction = a.id)
-		WHERE r.id = #{id}
+			   u.nick_name AS nickName, a.title AS `attraction`, count(rl.id) as `like`
+		FROM review_board AS r LEFT JOIN review_like AS rl ON (r.id=rl.review)
+			JOIN user AS u ON (r.user = u.id) JOIN attraction AS a ON (r.attraction = a.id)
+		GROUP BY r.id
+		HAVING r.id = #{id}
 	</select>
 
 	<select id="findAll" resultType="com.comealone.jeju.service.dto.ReviewBoardDto">
 		SELECT r.id AS id, r.title AS title, r.img AS img, r.content AS content, r.created_at AS createdAt,
-			   u.nick_name AS nickName, a.title AS `attraction`
-		FROM review_board AS r JOIN user AS u ON (r.user = u.id) JOIN attraction AS a ON (r.attraction = a.id)
+			   u.nick_name AS nickName, a.title AS `attraction`, count(rl.id) as `like`
+		FROM review_board AS r LEFT JOIN review_like AS rl ON (r.id=rl.review)
+			JOIN user AS u ON (r.user = u.id) JOIN attraction AS a ON (r.attraction = a.id)
+		GROUP BY r.id
 	</select>
 
 	<update id="update">

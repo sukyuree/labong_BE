@@ -10,4 +10,5 @@ public interface ReviewLikeRepository {
     Optional<ReviewLike> findByUserAndReview(Long userId, Long reviewId);
     void save(ReviewLike reviewLike);
     void delete(Long userId, Long reviewId);
+    int countByReview(Long reviewId);
 }

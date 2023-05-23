@@ -16,6 +16,12 @@
 		WHERE user = #{userId} AND attraction = #{attractionId}
 	</select>
 
+	<select id="countByAttraction">
+		SELECT count(*)
+		FROM attraction_like
+		WHERE attraction = #{attractionId}
+	</select>
+
 	<insert id="save">
 		INSERT INTO attraction_like(user, attraction)
 		VALUES(#{user}, #{attraction})

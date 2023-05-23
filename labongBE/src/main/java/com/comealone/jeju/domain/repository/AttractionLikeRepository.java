@@ -10,4 +10,5 @@ public interface AttractionLikeRepository {
     Optional<AttractionLike> findByUserAndAttraction(Long userId, Long attractionId);
     void save(AttractionLike attractionLike);
     void delete(Long userId, Long attractionId);
+    int countByAttraction(Long attractionId);
 }

@@ -6,6 +6,7 @@ import com.comealone.jeju.domain.model.User;
 import com.comealone.jeju.domain.repository.AttractionLikeRepository;
 import com.comealone.jeju.domain.repository.AttractionRepository;
 import com.comealone.jeju.domain.repository.UserRepository;
+import com.comealone.jeju.service.dto.AttractionDto;
 import com.comealone.jeju.util.security.SecurityUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -26,11 +27,11 @@ public class AttractionService {
         return user;
     }
 
-    public Attraction getAttraction(Long id){
+    public AttractionDto getAttraction(Long id){
         return attractionRepository.findById(id).orElse(null);
     }
 
-    public List<Attraction> searchByKeyword(String keywordType, String keyword){
+    public List<AttractionDto> searchByKeyword(String keywordType, String keyword){
         if(keywordType.equals("address"))
             return attractionRepository.findAllByAddress(keyword);
         if(keywordType.equals("keyword"))

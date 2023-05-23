@@ -16,6 +16,12 @@
 		WHERE user = #{userId} AND review = #{reviewId}
 	</select>
 
+	<select id="countByReview">
+		SELECT COUNT(*)
+		FROM review_like
+		WHERE review = {reviewId}
+	</select>
+
 	<insert id="save">
 		INSERT INTO review_like(user, review)
 		VALUES(#{user}, #{review})

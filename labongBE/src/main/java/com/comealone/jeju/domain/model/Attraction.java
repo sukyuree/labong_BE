@@ -25,6 +25,8 @@ public class Attraction {
 
     BigDecimal longitude;
 
+    String gugunCode;
+
     String image1;
 
     String image2;

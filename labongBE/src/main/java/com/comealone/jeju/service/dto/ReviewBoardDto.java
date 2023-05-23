@@ -29,6 +29,7 @@ public class ReviewBoardDto {
 
     String attraction;
 
+    int like;
     public ReviewBoardDto(ReviewBoard reviewBoard, User user, Attraction attraction){
         this.id = reviewBoard.getId();
         this.title = reviewBoard.getTitle();
