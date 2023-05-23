@@ -9,6 +9,7 @@ import com.comealone.jeju.domain.repository.UserRepository;
 import com.comealone.jeju.util.security.SecurityUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -37,6 +38,7 @@ public class AttractionService {
         return null;
     }
 
+    @Transactional
     public boolean addOrSubLike(Long attractionId){
         User user = currentUser();
         AttractionLike attractionLike = attractionLikeRepository.findByUserAndAttraction(user.getId(),attractionId).orElse(null);

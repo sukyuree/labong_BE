@@ -22,7 +22,7 @@ import java.util.List;
 public class ReviewBoardService {
     private final ReviewBoardRepository reviewBoardRepository;
     private final UserRepository userRepository;
-    private final AttractionRepository attractionRepository;
+    private final ReviewLikeRepository reviewLikeRepository;
 
     private User currentUser(){
         User user = userRepository.findById(SecurityUtil.getCurrentUserId())
@@ -60,5 +60,23 @@ public class ReviewBoardService {
         User user = currentUser();
         ReviewBoardDto reviewBoardDto = reviewBoardRepository.findById(id).orElse(null);
         return user.getNickName()==reviewBoardDto.getNickName() ? true:false;
+    }
+
+    @Transactional
+    public boolean addOrSubLike(Long reviewId) {
+        User user = currentUser();
+        ReviewLike reviewLike = reviewLikeRepository.findByUserAndReview(user.getId(), reviewId).orElse(null);
+        boolean rtn = true;
+        if (reviewLike == null) {
+            reviewLike = ReviewLike.builder()
+                    .user(user.getId())
+                    .review(reviewId)
+                    .build();
+            reviewLikeRepository.save(reviewLike);
+        } else {
+            reviewLikeRepository.delete(user.getId(), reviewId);
+            rtn = false;
+        }
+        return rtn;
     }
 }

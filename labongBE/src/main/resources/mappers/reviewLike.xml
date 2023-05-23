@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.comealone.jeju.domain.repository.ReviewLikeRepository">
+
+	<resultMap id="ReviewLikeModel" type="ReviewLike">
+		<result column="id" property="id"/>
+		<result column="user" property="user"/>
+		<result column="review" property="review"/>
+	</resultMap>
+
+	<select id="findByUserAndReview" resultMap="ReviewLikeModel">
+		SELECT *
+		FROM review_like
+		WHERE user = #{userId} AND review = #{reviewId}
+	</select>
+
+	<insert id="save">
+		INSERT INTO review_like(user, review)
+		VALUES(#{user}, #{review})
+	</insert>
+
+	<delete id="delete">
+		DELETE FROM review_like
+		WHERE user = #{userId} AND review = #{reviewId}
+	</delete>
+</mapper>
