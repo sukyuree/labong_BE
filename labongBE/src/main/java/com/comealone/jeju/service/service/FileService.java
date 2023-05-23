@@ -25,7 +25,7 @@ public class FileService {
                     file.transferTo(new File(folder, saveFileName));
                 }
             }
-            return saveFileName;
+            return dir+saveFileName;
         } catch (Exception e) {
             return null;
         }
