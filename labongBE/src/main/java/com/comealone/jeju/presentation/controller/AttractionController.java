@@ -24,4 +24,12 @@ public class AttractionController {
     public ResponseEntity<? extends BaseResponse> getAttraction(@PathVariable Long id){
         return ResponseEntity.status(200).body(new AttractionRes("조회에 성공했습니다.",200,attractionService.getAttraction(id)));
     }
+
+    @PostMapping("/{id}/like")
+    public ResponseEntity<? extends BaseResponse> addLike(@PathVariable Long id){
+        boolean addOrSub = attractionService.addOrSubLike(id);
+        if(addOrSub)
+            return ResponseEntity.status(201).body(new BaseResponse("좋아요가 완료되었습니다.",201));
+        return ResponseEntity.status(200).body(new BaseResponse("좋아요가 취소되었습니다.",200));
+    }
 }
