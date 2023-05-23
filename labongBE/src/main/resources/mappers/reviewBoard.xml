@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.comealone.jeju.domain.repository.ReviewBoardRepository">
+
+	<resultMap id="ReviewBoardModel" type="ReviewBoard">
+	  <result column="id" property="id"/>
+	  <result column="title" property="title"/>
+	  <result column="content" property="content"/>
+	  <result column="user" property="user"/>
+	  <result column="attraction" property="attraction"/>
+	  <result column="created_at" property="createdAt"/>
+	</resultMap>
+
+	<insert id="save">
+		INSERT INTO review_board(
+			title, content, user, attraction, img
+		) values (
+			#{title}, #{content}, #{user}, #{attraction}, #{img}
+		)
+	</insert>
+
+	<select id="findById" resultType="com.comealone.jeju.service.dto.ReviewBoardDto">
+		SELECT r.id AS id, r.title AS title, r.img AS img, r.content AS content, r.created_at AS createdAt,
+		       u.nick_name AS nickName, a.title AS `attraction`
+		FROM review_board AS r JOIN user AS u ON (r.user = u.id) JOIN attraction AS a ON (r.attraction = a.id)
+		WHERE r.id = #{id}
+	</select>
+
+	<select id="findAll" resultType="com.comealone.jeju.service.dto.ReviewBoardDto">
+		SELECT r.id AS id, r.title AS title, r.img AS img, r.content AS content, r.created_at AS createdAt,
+			   u.nick_name AS nickName, a.title AS `attraction`
+		FROM review_board AS r JOIN user AS u ON (r.user = u.id) JOIN attraction AS a ON (r.attraction = a.id)
+	</select>
+
+	<update id="update">
+		UPDATE review_board
+		SET title = #{title}, content = #{content}, attraction = #{attraction}, img = #{img}
+		WHERE id = #{id}
+	</update>
+
+	<delete id="delete">
+		DELETE FROM review_board
+		WHERE id = #{id}
+	</delete>
+</mapper>
