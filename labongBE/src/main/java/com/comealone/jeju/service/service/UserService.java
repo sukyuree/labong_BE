@@ -1,5 +1,7 @@
 package com.comealone.jeju.service.service;
 
+import com.comealone.jeju.domain.repository.FollowRepository;
+import com.comealone.jeju.service.dto.UserDto;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
@@ -25,6 +27,7 @@ public class UserService {
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
     private final TokenProvider tokenProvider;
+    private final FollowRepository followRepository;
 
     private User findCurrentUser(){
         User user = userRepository.findById(SecurityUtil.getCurrentUserId())
@@ -100,5 +103,10 @@ public class UserService {
     @Transactional
     public void signOut(Long id){
         userRepository.delete(id);
+    }
+
+    public UserDto getMyInfo(LoginReq loginReq){
+        User user = userRepository.findByUserId(loginReq.getUserId()).orElse(null);
+        return new UserDto(user,followRepository.findAllFollowerById(user.getId()),followRepository.findAllFollowingById(user.getId()));
     }
 }

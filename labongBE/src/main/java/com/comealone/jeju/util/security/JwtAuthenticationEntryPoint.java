@@ -32,6 +32,8 @@ public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
             baseResponse.setMsg("지원되지 않는 JWT 토큰입니다.");
         } else if (TokenProvider.exception == 3) {
             baseResponse.setMsg("JWT 토큰이 잘못되었습니다.");
+        } else if (TokenProvider.exception == 4) {
+            baseResponse.setMsg("JWT 토큰이 필요합니다.");
         }
         response.getOutputStream().write(new ObjectMapper().writeValueAsString(baseResponse).getBytes());
     }

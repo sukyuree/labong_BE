@@ -1,6 +1,7 @@
 package com.comealone.jeju.presentation.controller;
 
 import com.comealone.jeju.service.dto.TokenDto;
+import com.comealone.jeju.service.dto.UserDto;
 import com.comealone.jeju.service.request.*;
 import com.comealone.jeju.service.response.*;
 import com.comealone.jeju.service.service.CertificationService;
@@ -56,9 +57,9 @@ public class UserController {
             return ResponseEntity.status(400).body(new BaseResponse("패스워드가 틀렸습니다.", 400));
 
         TokenDto tokenDto = userService.createToken(loginReq);
-        
+        UserDto userDto = userService.getMyInfo(loginReq);
         // Todo : 로그인 할 때 친구 목록 넘겨주기.
-        return ResponseEntity.status(200).body(new LoginRes("로그인에 성공했습니다.",200, tokenDto.getAccessToken(),tokenDto.getRefreshToken()));
+        return ResponseEntity.status(200).body(new LoginRes("로그인에 성공했습니다.",200, tokenDto.getAccessToken(),tokenDto.getRefreshToken(),userDto));
     }
 
     @PostMapping("/nick-name")
@@ -82,7 +83,7 @@ public class UserController {
         return ResponseEntity.status(200).body(new BaseResponse("사용 가능한 ID 입니다.", 200));
     }
 
-    @PutMapping("/modification/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<? extends BaseResponse> modifyMyInfo(@PathVariable Long id, @RequestBody SignUpReq signUpReq){
         if(!userService.isOwnUser(id))
             return ResponseEntity.status(403).body(new BaseResponse("수정 권한이 없습니다.",403));

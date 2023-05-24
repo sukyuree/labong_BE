@@ -105,6 +105,9 @@ public class TokenProvider {
         } catch (IllegalArgumentException e) {
             log.info("JWT 토큰이 잘못되었습니다.");
             exception = 3;
+        } catch (NullPointerException e){
+            log.info("JWT 토큰이 필요합니다.");
+            exception = 4;
         }
         return false;
     }
