@@ -89,4 +89,12 @@ public class UserController {
         userService.modifyMyInfo(signUpReq);
         return ResponseEntity.status(201).body(new BaseResponse("정보 수정에 성공했습니다.",201));
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<? extends BaseResponse> deleteMyInfo(@PathVariable Long id){
+        if(!userService.isOwnUser(id))
+            return ResponseEntity.status(403).body(new BaseResponse("탈퇴 권한이 없습니다.",403));
+        userService.signOut(id);
+        return ResponseEntity.status(200).body(new BaseResponse("회원 탈퇴에 성공했습니다.",200));
+    }
 }

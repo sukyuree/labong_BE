@@ -96,4 +96,9 @@ public class UserService {
         modifiedUser.setUserPw(encryptPassword(signUpReq.getUserPw()));
         userRepository.update(modifiedUser);
     }
+
+    @Transactional
+    public void signOut(Long id){
+        userRepository.delete(id);
+    }
 }

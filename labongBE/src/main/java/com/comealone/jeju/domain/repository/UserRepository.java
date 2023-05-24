@@ -14,4 +14,5 @@ public interface UserRepository{
     Optional<User> findByNickName(String nickName);
     void save(User user);
     void update(User user);
+    void delete(Long id);
 }

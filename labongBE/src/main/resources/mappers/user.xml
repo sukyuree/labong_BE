@@ -51,4 +51,9 @@
 		SET nick_name = #{nickName}, user_pw = #{userPw}
 		WHERE id = #{id}
 	</update>
+
+	<delete id="delete">
+		DELETE FROM user
+		WHERE id = #{id}
+	</delete>
 </mapper>
