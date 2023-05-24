@@ -13,4 +13,5 @@ public interface UserRepository{
     Optional<User> findByUserId(String userId);
     Optional<User> findByNickName(String nickName);
     void save(User user);
+    void update(User user);
 }

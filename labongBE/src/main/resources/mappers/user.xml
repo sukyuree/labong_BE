@@ -45,4 +45,10 @@
 			#{userId}, #{userPw}, #{nickName}, #{email}, #{profileImg}
 		)
 	</insert>
+
+	<update id="update">
+		UPDATE user
+		SET nick_name = #{nickName}, user_pw = #{userPw}
+		WHERE id = #{id}
+	</update>
 </mapper>

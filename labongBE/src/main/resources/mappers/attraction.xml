@@ -32,7 +32,6 @@
 		FROM attraction LEFT JOIN attraction_like ON (attraction.id = attraction_like.attraction) LEFT JOIN review_board ON (attraction.id = review_board.attraction)
 		GROUP BY attraction.id
 		HAVING attraction.title like CONCAT('%', #{keyword}, '%')
-		OR attraction.info like CONCAT('%', #{keyword}, '%')
 	</select>
 
 	<select id="findAllByAddress" resultMap="AttractionModel">

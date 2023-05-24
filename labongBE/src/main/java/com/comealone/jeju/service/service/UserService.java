@@ -82,4 +82,18 @@ public class UserService {
         // 5. 토큰 발금
         return tokenDto;
     }
+
+    public boolean isOwnUser(Long id){
+        User user = findCurrentUser();
+        return user.getId()==id ? true : false;
+    }
+
+    @Transactional
+    public void modifyMyInfo(SignUpReq signUpReq){
+        User user = findCurrentUser();
+        User modifiedUser = signUpReq.toUserModel();
+        modifiedUser.setId(user.getId());
+        modifiedUser.setUserPw(encryptPassword(signUpReq.getUserPw()));
+        userRepository.update(modifiedUser);
+    }
 }

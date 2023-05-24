@@ -81,4 +81,12 @@ public class UserController {
             return ResponseEntity.status(409).body(new BaseResponse("이미 존재하는 Email 입니다.", 409));
         return ResponseEntity.status(200).body(new BaseResponse("사용 가능한 ID 입니다.", 200));
     }
+
+    @PutMapping("/modification/{id}")
+    public ResponseEntity<? extends BaseResponse> modifyMyInfo(@PathVariable Long id, @RequestBody SignUpReq signUpReq){
+        if(!userService.isOwnUser(id))
+            return ResponseEntity.status(403).body(new BaseResponse("수정 권한이 없습니다.",403));
+        userService.modifyMyInfo(signUpReq);
+        return ResponseEntity.status(201).body(new BaseResponse("정보 수정에 성공했습니다.",201));
+    }
 }
