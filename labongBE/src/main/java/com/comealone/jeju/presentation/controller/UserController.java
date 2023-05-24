@@ -26,13 +26,6 @@ public class UserController {
     
     @PostMapping("/signup")
     public ResponseEntity<? extends BaseResponse> addUser(@Valid @RequestBody SignUpReq signUpReq){
-        if(userService.isExistUserId(signUpReq.getUserId()))
-            return ResponseEntity.status(409).body(new BaseResponse("이미 존재하는 ID 입니다.", 409));
-        if(userService.isExistEmail(signUpReq.getEmail()))
-            return ResponseEntity.status(409).body(new BaseResponse("이미 존재하는 Email 입니다.", 409));
-        if(userService.isExistNickName(signUpReq.getNickName()))
-            return ResponseEntity.status(409).body(new BaseResponse("이미 존재하는 닉네임 입니다.", 409));
-
         signUpReq.setUserPw(userService.encryptPassword(signUpReq.getUserPw()));
         userService.save(signUpReq);
         return ResponseEntity.status(201).body(new BaseResponse("회원가입이 완료되었습니다.",201));
@@ -66,5 +59,26 @@ public class UserController {
         
         // Todo : 로그인 할 때 친구 목록 넘겨주기.
         return ResponseEntity.status(200).body(new LoginRes("로그인에 성공했습니다.",200, tokenDto.getAccessToken(),tokenDto.getRefreshToken()));
+    }
+
+    @PostMapping("/nick-name")
+    public ResponseEntity<? extends BaseResponse> nickNameDupCheck(@RequestBody DupCheckReq dupCheckReq){
+        if(userService.isExistNickName(dupCheckReq.getNickName()))
+            return ResponseEntity.status(409).body(new BaseResponse("이미 존재하는 닉네임 입니다.", 409));
+        return ResponseEntity.status(200).body(new BaseResponse("사용 가능한 닉네임 입니다.", 200));
+    }
+
+    @PostMapping("/user-id")
+    public ResponseEntity<? extends  BaseResponse> userIdDupCheck(@RequestBody DupCheckReq dupCheckReq){
+        if(userService.isExistUserId(dupCheckReq.getUserId()))
+            return ResponseEntity.status(409).body(new BaseResponse("이미 존재하는 ID 입니다.", 409));
+        return ResponseEntity.status(200).body(new BaseResponse("사용 가능한 ID 입니다.", 200));
+    }
+
+    @PostMapping("/email")
+    public ResponseEntity<? extends  BaseResponse> emailDupCheck(@RequestBody DupCheckReq dupCheckReq){
+        if(userService.isExistEmail(dupCheckReq.getEmail()))
+            return ResponseEntity.status(409).body(new BaseResponse("이미 존재하는 Email 입니다.", 409));
+        return ResponseEntity.status(200).body(new BaseResponse("사용 가능한 ID 입니다.", 200));
     }
 }
