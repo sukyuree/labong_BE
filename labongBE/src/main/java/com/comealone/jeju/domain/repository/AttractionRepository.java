@@ -14,4 +14,5 @@ public interface AttractionRepository {
     List<AttractionDto> findAllByAddress(String address);
     List<AttractionDto> findAll();
     List<AttractionDto> findAllByGugnType(int gugunCode, int contentType);
+    List<AttractionDto> findMyLike(Long userId);
 }

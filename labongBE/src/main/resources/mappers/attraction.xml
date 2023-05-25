@@ -53,4 +53,10 @@
 		GROUP BY attraction.id
 		HAVING attraction.address like CONCAT('%', #{address}, '%')
 	</select>
+
+	<select id="findMyLike" resultMap="AttractionModel">
+		SELECT attraction.*, count(attraction_like.id) as `like`
+		FROM attraction JOIN (SELECT * FROM attraction_like WHERE user=#{userId}) as attraction_like ON (attraction.id = attraction_like.attraction)
+		GROUP BY attraction.id;
+	</select>
 </mapper>

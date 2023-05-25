@@ -1,5 +1,6 @@
 package com.comealone.jeju.presentation.controller;
 
+import com.comealone.jeju.service.dto.AttractionDto;
 import com.comealone.jeju.service.dto.TokenDto;
 import com.comealone.jeju.service.dto.UserDto;
 import com.comealone.jeju.service.request.*;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.mail.MessagingException;
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @CrossOrigin(origins = { "*" })
@@ -58,8 +60,9 @@ public class UserController {
 
         TokenDto tokenDto = userService.createToken(loginReq);
         UserDto userDto = userService.getMyInfo(loginReq);
+        List<AttractionDto> attractionDto = userService.getMyLikeAttraction(loginReq);
         // Todo : 로그인 할 때 친구 목록 넘겨주기.
-        return ResponseEntity.status(200).body(new LoginRes("로그인에 성공했습니다.",200, tokenDto.getAccessToken(),tokenDto.getRefreshToken(),userDto));
+        return ResponseEntity.status(200).body(new LoginRes("로그인에 성공했습니다.",200, tokenDto.getAccessToken(),tokenDto.getRefreshToken(),userDto,attractionDto));
     }
 
     @PostMapping("/nick-name")

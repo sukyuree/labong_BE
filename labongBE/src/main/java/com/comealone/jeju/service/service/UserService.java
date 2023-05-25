@@ -1,6 +1,8 @@
 package com.comealone.jeju.service.service;
 
+import com.comealone.jeju.domain.repository.AttractionRepository;
 import com.comealone.jeju.domain.repository.FollowRepository;
+import com.comealone.jeju.service.dto.AttractionDto;
 import com.comealone.jeju.service.dto.UserDto;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -19,6 +21,8 @@ import com.comealone.jeju.util.security.SecurityUtil;
 
 import lombok.RequiredArgsConstructor;
 
+import java.util.List;
+
 
 @Service
 @RequiredArgsConstructor
@@ -28,6 +32,7 @@ public class UserService {
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
     private final TokenProvider tokenProvider;
     private final FollowRepository followRepository;
+    private final AttractionRepository attractionRepository;
 
     private User findCurrentUser(){
         User user = userRepository.findById(SecurityUtil.getCurrentUserId())
@@ -108,5 +113,10 @@ public class UserService {
     public UserDto getMyInfo(LoginReq loginReq){
         User user = userRepository.findByUserId(loginReq.getUserId()).orElse(null);
         return new UserDto(user,followRepository.findAllFollowerById(user.getId()),followRepository.findAllFollowingById(user.getId()));
+    }
+
+    public List<AttractionDto> getMyLikeAttraction(LoginReq loginReq){
+        User user = userRepository.findByUserId(loginReq.getUserId()).orElse(null);
+        return attractionRepository.findMyLike(user.getId());
     }
 }
