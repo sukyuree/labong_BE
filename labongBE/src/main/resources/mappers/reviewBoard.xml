@@ -32,10 +32,11 @@
 
 	<select id="findAll" resultType="com.comealone.jeju.service.dto.ReviewBoardDto">
 		SELECT r.id AS id, r.title AS title, r.img AS img, r.content AS content, r.created_at AS createdAt,
-			   u.nick_name AS nickName, a.title AS `attraction`, count(rl.id) as `like`
+			   u.nick_name AS nickName, u.profile_img as profileImg, a.title AS `attraction`, count(rl.id) as `like`
 		FROM review_board AS r LEFT JOIN review_like AS rl ON (r.id=rl.review)
 			JOIN user AS u ON (r.user = u.id) JOIN attraction AS a ON (r.attraction = a.id)
 		GROUP BY r.id
+		ORDER BY r.id desc
 	</select>
 
 	<update id="update">

@@ -54,9 +54,11 @@ public class PlanService {
         return null;
     }
 
-    public void addPlan(PlanReq planReq){
+    public Long addPlan(PlanReq planReq){
         User user = currentUser();
-        planRepository.save(planReq.toPlanModel(user.getId()));
+        Plan plan = planReq.toPlanModel(user.getId());
+        planRepository.save(plan);
+        return plan.getId();
     }
 
     public void modifyPlan(Long id, PlanReq planReq){

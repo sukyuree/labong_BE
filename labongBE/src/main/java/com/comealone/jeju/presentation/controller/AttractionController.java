@@ -20,6 +20,11 @@ public class AttractionController {
         return ResponseEntity.status(200).body(new AttractionListRes("조회에 성공했습니다.",200,attractionService.searchByKeyword(keywordType,keyword)));
     }
 
+    @GetMapping()
+    public ResponseEntity<? extends BaseResponse> searchAll(){
+        return ResponseEntity.status(200).body(new AttractionListRes("조회에 성공했습니다.",200,attractionService.getAllAttraction()));
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<? extends BaseResponse> getAttraction(@PathVariable Long id){
         return ResponseEntity.status(200).body(new AttractionRes("조회에 성공했습니다.",200,attractionService.getAttraction(id)));

@@ -26,7 +26,7 @@ public class AttractionService {
                 .orElseThrow(() -> new RuntimeException("로그인 유저 정보가 없습니다."));
         return user;
     }
-
+    public List<AttractionDto> getAllAttraction(){return attractionRepository.findAll();}
     public AttractionDto getAttraction(Long id){
         return attractionRepository.findById(id).orElse(null);
     }

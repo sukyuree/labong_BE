@@ -58,6 +58,9 @@
 		) values (
 			 #{planName}, #{startDate}, #{endDate}, #{concept}, #{user}
 		 )
+		<selectKey keyProperty="id" resultType="Long">
+			SELECT LAST_INSERT_ID()
+		</selectKey>
 	</insert>
 
 	<update id="update">

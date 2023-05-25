@@ -26,7 +26,7 @@ public class MateBoardDto {
     Date date;
     String place;
     String nickName;
-
+    String profileImg;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd-hh:mm:ss")
     LocalDateTime createdAt;
     List<CommentDto> commentList;
@@ -39,6 +39,7 @@ public class MateBoardDto {
         this.place = mateBoard.getPlace();
         this.createdAt = mateBoard.getCreatedAt();
         this.nickName = user.getNickName();
+        this.profileImg = user.getProfileImg();
         this.commentList = commentList;
     }
 }

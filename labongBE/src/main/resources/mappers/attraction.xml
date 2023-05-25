@@ -34,6 +34,12 @@
 		HAVING attraction.title like CONCAT('%', #{keyword}, '%')
 	</select>
 
+	<select id="findAll" resultMap="AttractionModel">
+		SELECT attraction.*, count(attraction_like.id) as `like`, count(review_board.id) as review
+		FROM attraction LEFT JOIN attraction_like ON (attraction.id = attraction_like.attraction) LEFT JOIN review_board ON (attraction.id = review_board.attraction)
+		GROUP BY attraction.id
+	</select>
+
 	<select id="findAllByAddress" resultMap="AttractionModel">
 		SELECT attraction.*, count(attraction_like.id) as `like`, count(review_board.id) as review
 		FROM attraction LEFT JOIN attraction_like ON (attraction.id = attraction_like.attraction) LEFT JOIN review_board ON (attraction.id = review_board.attraction)

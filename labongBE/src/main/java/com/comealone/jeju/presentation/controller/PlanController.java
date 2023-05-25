@@ -5,6 +5,7 @@ import com.comealone.jeju.service.request.PlanReq;
 import com.comealone.jeju.service.response.BaseResponse;
 import com.comealone.jeju.service.response.DetailPlanListRes;
 import com.comealone.jeju.service.response.PlanListRes;
+import com.comealone.jeju.service.response.PlanRes;
 import com.comealone.jeju.service.service.PlanService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -29,8 +30,8 @@ public class PlanController {
 
     @PostMapping
     public ResponseEntity<? extends BaseResponse> addPlan(@RequestBody PlanReq planReq){
-        planService.addPlan(planReq);
-        return ResponseEntity.status(201).body(new BaseResponse("계획 등록에 성공했습니다.",201));
+        Long id = planService.addPlan(planReq);
+        return ResponseEntity.status(201).body(new PlanRes("계획 등록에 성공했습니다.",201,id));
     }
 
     @PutMapping("/{id}")

@@ -17,6 +17,8 @@ public class CommentDto {
 
     String nickName;
 
+    String profileImg;
+
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd-hh:mm:ss")
     LocalDateTime createdAt;
 

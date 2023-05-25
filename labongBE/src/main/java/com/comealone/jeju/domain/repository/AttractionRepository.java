@@ -12,4 +12,5 @@ public interface AttractionRepository {
     Optional<AttractionDto> findById(Long id);
     List<AttractionDto> findAllByKeyword(String keyword);
     List<AttractionDto> findAllByAddress(String address);
+    List<AttractionDto> findAll();
 }

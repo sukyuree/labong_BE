@@ -27,6 +27,8 @@ public class ReviewBoardDto {
 
     String nickName;
 
+    String profileImg;
+
     String attraction;
 
     int like;
