@@ -3,6 +3,7 @@ package com.comealone.jeju.util;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.web.servlet.config.annotation.*;
 import org.springframework.web.servlet.resource.PathResourceResolver;
 
@@ -12,21 +13,45 @@ import org.springframework.web.servlet.resource.PathResourceResolver;
 public class WebConfig implements WebMvcConfigurer {
 	private String uploadFilePath;
 
-	public WebConfig(@Value("${file.path.upload-files}") String uploadFilePath) {
-		this.uploadFilePath=uploadFilePath;
-	}
+//	public WebConfig(@Value("${file.path.upload-files}") String uploadFilePath) {
+//		this.uploadFilePath=uploadFilePath;
+//	}
+//	@Override
+//	public void addResourceHandlers(ResourceHandlerRegistry registry) {
+////		registry.addResourceHandler("/resource/**")
+////				.addResourceLocations("file:///" + uploadFilePath +"/")
+////				.setCachePeriod(3600)
+////				.resourceChain(true)
+////				.addResolver(new PathResourceResolver());
+//		registry.addResourceHandler("/static/**").addResourceLocations("classpath:/static/");
+//		registry.addResourceHandler("/swagger-ui/**")
+//				.addResourceLocations("classpath:/META-INF/resources/webjars/springfox-swagger-ui/");
+//	}
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
-		registry.addResourceHandler("/resource/**")
-				.addResourceLocations("file:///" + uploadFilePath +"/")
-				.setCachePeriod(3600)
-				.resourceChain(true)
-				.addResolver(new PathResourceResolver());
 		registry.addResourceHandler("/static/**").addResourceLocations("classpath:/static/");
-		registry.addResourceHandler("/swagger-ui/**")
-				.addResourceLocations("classpath:/META-INF/resources/webjars/springfox-swagger-ui/");
+		registry.addResourceHandler("/swagger-ui.html**").addResourceLocations("classpath:/META-INF/resources/swagger-ui.html");
+		registry.addResourceHandler("/webjars/**").addResourceLocations("classpath:/META-INF/resources/webjars/");
 	}
-
+//	@Override
+//	public void addCorsMappings(CorsRegistry registry) {
+////		System.out.println("CORS Setting");
+////		default 설정.
+////		Allow all origins.
+////		Allow "simple" methods GET, HEAD and POST.
+////		Allow all headers.
+////		Set max age to 1800 seconds (30 minutes).
+//		registry.addMapping("/**").allowedOrigins("*")
+////		registry.addMapping("/**")
+////				.allowedOrigins("http://localhost:8080", "http://localhost:8081")
+////				.allowedMethods(HttpMethod.GET.name(), HttpMethod.POST.name(), HttpMethod.PUT.name(),
+////						HttpMethod.DELETE.name(), HttpMethod.HEAD.name(), HttpMethod.OPTIONS.name(),
+////						HttpMethod.PATCH.name())
+//				.allowedHeaders("*")
+//				.allowCredentials(false)
+//				.allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH", "HEAD")
+//				.maxAge(1800);
+//	}
 	@Override
 	public void addCorsMappings(CorsRegistry registry) {
 //		System.out.println("CORS Setting");
@@ -36,14 +61,11 @@ public class WebConfig implements WebMvcConfigurer {
 //		Allow all headers.
 //		Set max age to 1800 seconds (30 minutes).
 		registry.addMapping("/**").allowedOrigins("*")
-//		registry.addMapping("/**")
-//				.allowedOrigins("http://localhost:8080", "http://localhost:8081")
-//				.allowedMethods(HttpMethod.GET.name(), HttpMethod.POST.name(), HttpMethod.PUT.name(),
-//						HttpMethod.DELETE.name(), HttpMethod.HEAD.name(), HttpMethod.OPTIONS.name(),
-//						HttpMethod.PATCH.name())
-				.allowedHeaders("*")
-				.allowCredentials(false)
-				.allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH", "HEAD")
-				.maxAge(1800);
+//		.allowedOrigins("http://localhost:8080", "http://localhost:8081")
+			.allowedMethods(HttpMethod.GET.name(), HttpMethod.POST.name(), HttpMethod.PUT.name(),
+					HttpMethod.DELETE.name(), HttpMethod.HEAD.name(), HttpMethod.OPTIONS.name(),
+					HttpMethod.PATCH.name())
+//			.allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH", "HEAD")
+			.maxAge(1800);
 	}
 }
