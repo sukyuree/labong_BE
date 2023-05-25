@@ -13,4 +13,5 @@ public interface AttractionRepository {
     List<AttractionDto> findAllByKeyword(String keyword);
     List<AttractionDto> findAllByAddress(String address);
     List<AttractionDto> findAll();
+    List<AttractionDto> findAllByGugnType(int gugunCode, int contentType);
 }

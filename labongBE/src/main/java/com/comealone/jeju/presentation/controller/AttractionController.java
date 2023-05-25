@@ -1,5 +1,6 @@
 package com.comealone.jeju.presentation.controller;
 
+import com.comealone.jeju.service.request.AttractionReq;
 import com.comealone.jeju.service.response.AttractionListRes;
 import com.comealone.jeju.service.response.AttractionRes;
 import com.comealone.jeju.service.response.BaseResponse;
@@ -20,6 +21,11 @@ public class AttractionController {
         return ResponseEntity.status(200).body(new AttractionListRes("조회에 성공했습니다.",200,attractionService.searchByKeyword(keywordType,keyword)));
     }
 
+    @GetMapping("/gugun-type")
+    public ResponseEntity<? extends  BaseResponse> searchByGugnType(@RequestParam int gugunCode, int contentType){
+        return ResponseEntity.status(200).body(new AttractionListRes("조회에 성공했습니다.",200,attractionService.getAttractionByGugunType(gugunCode,contentType)));
+
+    }
     @GetMapping()
     public ResponseEntity<? extends BaseResponse> searchAll(){
         return ResponseEntity.status(200).body(new AttractionListRes("조회에 성공했습니다.",200,attractionService.getAllAttraction()));

@@ -7,6 +7,7 @@ import com.comealone.jeju.domain.repository.AttractionLikeRepository;
 import com.comealone.jeju.domain.repository.AttractionRepository;
 import com.comealone.jeju.domain.repository.UserRepository;
 import com.comealone.jeju.service.dto.AttractionDto;
+import com.comealone.jeju.service.request.AttractionReq;
 import com.comealone.jeju.util.security.SecurityUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -25,6 +26,9 @@ public class AttractionService {
         User user = userRepository.findById(SecurityUtil.getCurrentUserId())
                 .orElseThrow(() -> new RuntimeException("로그인 유저 정보가 없습니다."));
         return user;
+    }
+    public List<AttractionDto> getAttractionByGugunType(int gugunCode, int contentType){
+        return attractionRepository.findAllByGugnType(gugunCode, contentType);
     }
     public List<AttractionDto> getAllAttraction(){return attractionRepository.findAll();}
     public AttractionDto getAttraction(Long id){
