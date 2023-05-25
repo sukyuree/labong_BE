@@ -20,7 +20,7 @@
 	<select id="findAllByPlanId" resultType="com.comealone.jeju.service.dto.DetailPlanDto">
 		SELECT detailplan.id as detailPlanId, detailplan.day as day, detailplan.order as `order`,
 			attraction.id as attId, attraction.address as attAddress, attraction.latitude as attLatitude,
-			attraction.longitude as attLongitude, attraction.image1 as attImage1, attraction.image2 as attImage2
+			attraction.longitude as attLongitude, attraction.image1 as attImage1, attraction.image2 as attImage2,attraction.title as attTitle
 		FROM detailplan JOIN attraction on(detailplan.attraction = attraction.id)
 		WHERE detailplan.plan = #{planId}
 	</select>
